@@ -1,0 +1,51 @@
+public class Solution{
+
+	public static int kadane(int[]arr, int n){
+	
+		int cur_sum = 0;
+		int max_sum = 0;
+		
+		for(int i = 0; i < n; i++){
+			
+			int cur_element = arr[i];
+			cur_sum += cur_element;
+			
+			if(cur_sum <= 0){cur_sum = 0;}
+			max_sum = Math.max(cur_sum, max_sum);
+			
+		}
+		
+		return max_sum;
+	
+	}
+	
+	public static int reverse_kadane(int[] arr, int n){
+	
+		int total_sum = 0;
+		
+		for(int i = 0; i < n; i++){
+		
+			total_sum += arr[i];
+			arr[i] = -arr[i];
+			
+		}
+	
+		int min_subarray_sum = -kadane(arr, n);
+		int res = total_sum - min_subarray_sum;
+		
+		if(total_sum == min_subarray_sum) return total_sum;
+		else return res;
+		
+	}
+
+	public static int max_circular(int[] arr, int n){
+	
+		int kadane_ans = kadane(arr, n);
+		int reverse_ans = reverse_kadane(arr, n);
+		int res = Math.max(kadane_ans, reverse_ans);
+		
+		return res;
+		
+	} 
+
+}
