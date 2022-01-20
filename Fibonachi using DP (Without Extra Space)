@@ -1,0 +1,19 @@
+    class Sol{
+
+        public int non_fac(int n){
+
+            int p_2 = 0; p = 1;
+
+            for(int i = 2; i <= n; i++){
+                
+                int cur_i = p_2+p;
+                p_2 = p;
+                p = cur_i;
+
+            }
+
+            System.out.println(p);
+
+        }
+        
+    }
