@@ -1,0 +1,30 @@
+class Solution {
+    public int trap(int[] height) {
+        
+        if(height == null || height.length == 0)
+            return 0;
+        
+        int n = height.length, left = 0, right = n-1;
+        int mL = 0, mR = 0, res = 0;
+        
+        while(left < right){
+            
+            int cur_L = height[left], cur_R = height[right];
+            
+            if(cur_L < cur_R){
+                
+                if(cur_L >= mL){
+                    mL = cur_L;
+            }else{res += mL-cur_L;}
+            left++;
+            
+        }else{
+            if(cur_R >= mR){
+                mR = cur_R;
+            }else{res += mR-cur_R;}
+            right--;
+        }
+    }
+    return res;
+    }
+}
