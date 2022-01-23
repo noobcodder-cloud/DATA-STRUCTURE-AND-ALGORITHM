@@ -1,0 +1,22 @@
+class Solution{
+
+	public static int HiddenSequence(int[] diff, int low, int heigh){
+	
+		int n = diff.length;
+		int sum = 0, max = 0, min = 0;
+		
+		for(int i = 0; i < n; i++){
+			
+			sum += diff[i];
+			max = Math.max(max, sum);
+			min = Math.min(min, sum);
+		
+		}
+
+		int r1 = heigh-max;
+		int r2 = low-min;
+		
+		return (r1-r2 +1)>0?(r1-r2 +1):0;
+	}	
+
+}
