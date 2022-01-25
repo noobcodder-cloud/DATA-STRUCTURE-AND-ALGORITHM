@@ -1,0 +1,95 @@
+class Solution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        
+        // Start form 0 that is our left most value for the first time 
+        int left = 0; 
+        
+        // For storing answer we need a Data Structure 
+        // For this we took a ArrayList Since its .add() funtion took O(1) time complexicity
+        List<String> res = new ArrayList<>();
+        
+        // This will run until our left most index reach out of arrays length 
+        while(left < words.length){
+            
+            // Find the right most value for a given left index
+            int right = findRight(left, words, maxWidth);
+            
+            res.add(justify(left, right, words, maxWidth));
+            left = right+1;
+            
+        }
+        return res;
+    }
+    
+    private int findRight(int left, String[] words, int maxWidth){
+        
+        // Lets start with one value at begining
+        int right = left;
+        //  Take the lenght of given index then incress it by 1
+        int sum = words[right++].length();  /*
+                                            int sum = words[right].length();
+                                            right++; 
+                                            */
+        
+        // for evvry index check whether it will fall in same line or not
+        while(right < words.length && (sum + 1 + words[right].length()) <= maxWidth)
+            sum += (1+words[right++].length());
+        
+        // Decress right by one Reason --> if the for-loop end that means that the current value is Wrong and the previous value was correct 
+        return right-1; 
+        
+    } 
+    
+    private String justify(int left, int right, String[] words, int maxWidth){
+        
+        if(right-left == 0) return padRes(words[left], maxWidth);
+        
+        // Check whether a given set of Strings is the lastLine of answer or Not 
+        // A given set of words lies in last line if its right-most value is words.length-1 
+        boolean islastLine = (right==words.length-1);
+        // Check how many single space will be there between the given set of words 
+        int numSpaces = right-left;
+        //  Finds number of space required in the Given set of words
+        int totalSpace = maxWidth-wordsLength(left, right, words);
+        // Find number of space between words
+        String space = islastLine? " ":blanks(totalSpace/numSpaces);
+        // Find number of space that is not being evenly distributed
+        int remainder = islastLine? 0:totalSpace%numSpaces;
+            
+        StringBuilder res = new StringBuilder();
+        
+        for(int i = left; i <= right; i++){
+            
+            // Add the word including the given number of blanks
+            res.append(words[i])
+                .append(space)
+                .append(remainder-- > 0 ? " ":"");
+            
+        }
+        // Add the Space left to the right side
+        return padRes(res.toString().trim(), maxWidth);
+    }
+    
+    private int wordsLength(int left, int right, String[] words){
+        
+        // will find number of letter present between left-most part to right-most part 
+        
+        int wordsLength_ = 0;
+        
+        for(int i = left; i <= right; i++)
+            wordsLength_ += words[i].length();
+        
+        return wordsLength_;
+        
+    }
+    
+    private String padRes(String res, int maxWidth){
+        // This will add given number of blanks to the String
+        return res + blanks(maxWidth-res.length());
+    }
+    
+    private String blanks(int length){
+        // This will generate the given number of blanks 
+        return new String(new char[length]).replace('\0', ' ');
+    }
+}
