@@ -1,0 +1,40 @@
+import java.util.Arrays;
+
+public class Find_Minimum_element{
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        int[] arr = {1, 5, 3, 4, 3, 5, 6};
+        int ans = s.repeat(arr);        
+        System.out.println(ans);
+    }
+}
+
+class Solution{
+
+    public int repeat(int[] arr){
+
+        int n = arr.length;
+        int idx_size = 0;
+
+        for(int i: arr)
+            idx_size = Math.max(idx_size, i);
+
+        int[] idx_arr = new int[idx_size+1];
+        int res = Integer.MAX_VALUE;
+        Arrays.fill(idx_arr, -1);
+
+        for(int i = 0; i < n; i++){
+
+            int cur = arr[i];
+            int cur_idx = i;
+
+            if(idx_arr[cur] != -1)
+                res = Math.min(res, idx_arr[cur]);
+            else{
+                idx_arr[cur] = cur_idx;
+            }
+        }
+        return res;
+    }
+
+}
